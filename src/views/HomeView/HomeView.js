@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { AppBar, Tab, Tabs, Box, Typography } from '@material-ui/core';
+import { AppBar, Tab, Tabs } from '@material-ui/core';
+import TabPanel from '../../components/TabPanel';
+import QuestionCard from './components/QuestionCard';
 
 export default class HomeView extends Component {
   state = {
@@ -18,13 +20,13 @@ export default class HomeView extends Component {
     return (
       <>
         <AppBar position="static">
-          <Tabs value={tabIndex} onChange={this.handleChange}>
+          <Tabs centered value={tabIndex} onChange={this.handleChange}>
             <Tab label="Unanswered Questions" />
             <Tab label="Answered Questions" />
           </Tabs>
         </AppBar>
         <TabPanel value={tabIndex} index={0}>
-          Unanswered Questions
+          <QuestionCard />
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
           Answered Questions
@@ -32,18 +34,4 @@ export default class HomeView extends Component {
       </>
     );
   }
-}
-
-function TabPanel(props) {
-  const { children, value, index } = props;
-
-  return (
-    <div>
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
 }
