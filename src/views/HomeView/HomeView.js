@@ -2,22 +2,31 @@ import React, { Component } from 'react';
 import { AppBar, Tab, Tabs, Box, Typography } from '@material-ui/core';
 
 export default class HomeView extends Component {
+  state = {
+    tabIndex: 0,
+  };
 
+  handleChange = (e, newTabIndex) => {
+    this.setState({
+      tabIndex: newTabIndex,
+    });
+  };
 
   render() {
+    const { tabIndex } = this.state;
 
     return (
       <>
         <AppBar position="static">
-          <Tabs value={} onChange={this.handleChange}>
+          <Tabs value={tabIndex} onChange={this.handleChange}>
             <Tab label="Unanswered Questions" />
             <Tab label="Answered Questions" />
           </Tabs>
         </AppBar>
-        <TabPanel value={} index={0}>
+        <TabPanel value={tabIndex} index={0}>
           Unanswered Questions
         </TabPanel>
-        <TabPanel value={} index={1}>
+        <TabPanel value={tabIndex} index={1}>
           Answered Questions
         </TabPanel>
       </>
