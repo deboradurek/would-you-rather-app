@@ -6,10 +6,12 @@ import NavBar from './NavBar';
 import HomeView from '../views/HomeView/HomeView';
 import LoginView from '../views/LoginView/LoginView';
 import getUsers from '../actions/users';
+import getQuestions from '../actions/questions';
 
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(getUsers());
+    this.props.dispatch(getQuestions());
   }
 
   render() {
