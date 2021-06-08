@@ -36,6 +36,11 @@ class LoginView extends Component {
                 </MenuItem>
                 {users.map((user) => (
                   <MenuItem key={user.id} value={user.id}>
+                    <img
+                      src={user.avatarURL}
+                      alt={user.name}
+                      style={{ height: 36, width: 36, marginRight: 12 }}
+                    ></img>
                     {user.name}
                   </MenuItem>
                 ))}
