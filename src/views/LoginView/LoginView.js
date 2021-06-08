@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,8 +7,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Container, FormControl, MenuItem, Select } from '@material-ui/core';
 
-export default class LoginView extends Component {
+class LoginView extends Component {
   render() {
+    const { users } = this.props;
+
     return (
       <Container maxWidth="sm">
         <Card variant="outlined">
@@ -31,9 +34,11 @@ export default class LoginView extends Component {
                 <MenuItem value="" disabled>
                   Select User
                 </MenuItem>
-                <MenuItem value={10}>User1</MenuItem>
-                <MenuItem value={20}>User2</MenuItem>
-                <MenuItem value={30}>User3</MenuItem>
+                {users.map((user) => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </CardContent>
@@ -45,3 +50,11 @@ export default class LoginView extends Component {
     );
   }
 }
+
+function mapStateToProps({ users }) {
+  return {
+    users: Object.values(users),
+  };
+}
+
+export default connect(mapStateToProps)(LoginView);
