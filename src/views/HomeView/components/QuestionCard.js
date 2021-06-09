@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import { connect } from 'react-redux';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,19 +8,25 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 class QuestionCard extends Component {
+  handleClick = (e, questionId) => {
+    e.preventDefault();
+
+    this.props.history.push(`/questions/${questionId}`);
+  };
+
   render() {
     const { users, question } = this.props;
 
     return (
       <Card variant="outlined">
-        <div>
-          <img
-            src={users[question.author].avatarURL}
-            alt={users.name}
-            style={{ height: 100, width: 100, marginRight: 12 }}
-          ></img>
-        </div>
         <CardContent>
+          <div>
+            <img
+              src={users[question.author].avatarURL}
+              alt={users[question.author].name}
+              style={{ height: 100, width: 100, marginRight: 12 }}
+            ></img>
+          </div>
           <Typography color="textSecondary" gutterBottom>
             {users[question.author].name} asks:
           </Typography>
@@ -32,7 +39,11 @@ class QuestionCard extends Component {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">View Pull</Button>
+          <Link to={`/questions/${question.id}`}>
+            <Button size="small" onClick={(e) => this.handleClick(e, question.id)}>
+              View Pull
+            </Button>
+          </Link>
         </CardActions>
       </Card>
     );
@@ -47,4 +58,4 @@ function mapStateToProps({ users, questions: { questions } }, { questionId }) {
   };
 }
 
-export default connect(mapStateToProps)(QuestionCard);
+export default withRouter(connect(mapStateToProps)(QuestionCard));
