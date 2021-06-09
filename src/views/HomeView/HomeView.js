@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
-import { AppBar, Tab, Tabs } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { AppBar, Card, CardContent, Tab, Tabs } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
 import TabPanel from '../../components/TabPanel';
 import QuestionCard from './components/QuestionCard';
+import getQuestions from '../../actions/questions';
 
-export default class HomeView extends Component {
+class HomeView extends Component {
   state = {
     tabIndex: 0,
   };
+
+  componentDidMount() {
+    this.props.dispatch(getQuestions());
+  }
 
   handleChange = (e, newTabIndex) => {
     this.setState({
@@ -16,6 +23,7 @@ export default class HomeView extends Component {
 
   render() {
     const { tabIndex } = this.state;
+    const { isLoading, questionsIds } = this.props;
 
     return (
       <>
@@ -25,13 +33,40 @@ export default class HomeView extends Component {
             <Tab label="Answered Questions" />
           </Tabs>
         </AppBar>
-        <TabPanel value={tabIndex} index={0}>
-          <QuestionCard />
-        </TabPanel>
-        <TabPanel value={tabIndex} index={1}>
-          Answered Questions
-        </TabPanel>
+
+        {!isLoading ? (
+          <>
+            {questionsIds.map((questionId) => (
+              <TabPanel key={questionId} value={tabIndex} index={0}>
+                <QuestionCard questionId={questionId} />
+              </TabPanel>
+            ))}
+
+            <TabPanel value={tabIndex} index={1}>
+              Unanswered Questions
+            </TabPanel>
+          </>
+        ) : (
+          Array.from({ length: 3 }).map((_, index) => (
+            <Card variant="outlined" key={`placeholder-${index}`}>
+              <CardContent>
+                <Skeleton variant="rect" height={300} />
+              </CardContent>
+            </Card>
+          ))
+        )}
       </>
     );
   }
 }
+
+function mapStateToProps({ questions: { isLoading, questions } }) {
+  return {
+    isLoading,
+    questionsIds: Object.keys(questions).sort(
+      (a, b) => questions[b].timestamp - questions[a].timestamp
+    ),
+  };
+}
+
+export default connect(mapStateToProps)(HomeView);
