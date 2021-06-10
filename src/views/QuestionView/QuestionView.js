@@ -1,28 +1,67 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Button, Card, CardActions, CardContent, Typography } from '@material-ui/core';
+import {
+  Button,
+  Card,
+  CardContent,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import getQuestions from '../../actions/questions';
 
 class QuestionView extends Component {
+  state = {
+    voted: false,
+    choiceValue: '',
+  };
+
   componentDidMount() {
     this.props.dispatch(getQuestions());
   }
 
+  handleRadioChange = (e) => {
+    const choiceValue = e.target.value;
+
+    this.setState({
+      choiceValue,
+    });
+
+    console.log(choiceValue);
+  };
+
+  handleClick = (e, questionId) => {
+    e.preventDefault();
+
+    this.setState({
+      voted: true,
+    });
+  };
+
   render() {
     const { questionId, users, isLoading, questions } = this.props;
-
-    console.log('Props: ', this.props);
+    const { voted, choiceValue } = this.state;
 
     return (
       <>
         {!isLoading ? (
-          <Card variant="outlined" style={{ marginTop: 50 }}>
+          <Card variant="outlined" style={{ margin: 100 }}>
             <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                {users[questions[questionId].author].name} asks:
-              </Typography>
+              {!voted ? (
+                // Question card title
+                <Typography color="textSecondary" gutterBottom>
+                  {users[questions[questionId].author].name} asks:
+                </Typography>
+              ) : (
+                // Results card title
+                <Typography color="textSecondary" gutterBottom>
+                  Asked by {users[questions[questionId].author].name}:
+                </Typography>
+              )}
+
               <div>
                 <img
                   src={users[questions[questionId].author].avatarURL}
@@ -31,24 +70,63 @@ class QuestionView extends Component {
                 ></img>
               </div>
 
-              <Typography variant="h5" component="h2">
-                Would you rather
-              </Typography>
-              <br />
-              <div>
-                <Typography color="textSecondary" variant="body2" component="p">
-                  {questions[questionId].optionOne.text}
-                </Typography>
-                <Typography color="textSecondary" variant="body2" component="p">
-                  {questions[questionId].optionTwo.text}
-                </Typography>
-              </div>
+              {!voted ? (
+                // Question
+                <div>
+                  <Typography variant="h5" component="h2">
+                    Would you rather
+                  </Typography>
+                  <form onSubmit={(e) => this.handleClick(e, questionId)}>
+                    <FormControl component="fieldset">
+                      {/* <FormLabel component="legend">Would you rather</FormLabel> */}
+                      <RadioGroup
+                        name="quiz"
+                        value={choiceValue}
+                        onChange={(e) => this.handleRadioChange(e)}
+                      >
+                        <FormControlLabel
+                          value={questions[questionId].optionOne.text}
+                          control={<Radio />}
+                          label={questions[questionId].optionOne.text}
+                        />
+                        <FormControlLabel
+                          value={questions[questionId].optionTwo.text}
+                          control={<Radio />}
+                          label={questions[questionId].optionTwo.text}
+                        />
+                      </RadioGroup>
+                      <Button type="submit" variant="outlined" color="primary">
+                        Vote
+                      </Button>
+                    </FormControl>
+                  </form>
+                </div>
+              ) : (
+                // Results
+                <div>
+                  <Typography variant="h5" component="h2">
+                    Results:
+                  </Typography>
+                  <br />
+                  <div>
+                    <Card variant="outlined">
+                      <CardContent>
+                        <Typography color="textSecondary" variant="body2" component="p">
+                          Would you rather {questions[questionId].optionOne.text}?
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                    <Card variant="outlined">
+                      <CardContent>
+                        <Typography color="textSecondary" variant="body2" component="p">
+                          Would you rather {questions[questionId].optionTwo.text}?
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              )}
             </CardContent>
-            <CardActions>
-              {/* <Link to={`/questions/${question.id}`}> */}
-              <Button size="small">Vote</Button>
-              {/* </Link> */}
-            </CardActions>
           </Card>
         ) : (
           <Card variant="outlined">
