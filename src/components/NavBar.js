@@ -1,6 +1,7 @@
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Link } from 'react-router-dom';
 
 class NavBar extends Component {
   render() {
@@ -11,10 +12,10 @@ class NavBar extends Component {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6">Would You Rather</Typography>
-          <Button color="inherit">Home</Button>
-          <Button color="inherit">Add Question</Button>
+          <Link to={'/'}>Home</Link>
+          <Link to={'/add'}>Add Question</Link>
           <Button color="inherit">LeaderBoard</Button>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>
     );
