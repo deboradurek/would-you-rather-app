@@ -1,30 +1,46 @@
-import { Button, Card, CardActions, CardContent, TextField, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Button, Card, CardActions, CardContent, TextField, Typography } from '@material-ui/core';
+import { saveQuestion } from '../../actions/questions';
+import { Redirect } from 'react-router';
 
 class AddView extends Component {
   state = {
-    inputOne: '',
-    inputTwo: '',
+    optionOneText: '',
+    optionTwoText: '',
+    toHome: false,
   };
 
-  handleChangeOne = (e) => {
-    const inputOne = e.target.value;
+  handleChange = (field) => (e) => {
+    const input = e.target.value;
 
     this.setState({
-      inputOne,
+      [field]: input,
     });
   };
 
-  handleChangeTwo = (e) => {
-    const inputTwo = e.target.value;
+  // Save New Question to DataBase
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { optionOneText, optionTwoText } = this.state;
+    const { dispatch } = this.props;
+
+    dispatch(saveQuestion(optionOneText, optionTwoText, 'sarahedo'));
 
     this.setState({
-      inputTwo,
+      optionOneText: '',
+      optionTwoText: '',
+      toHome: true,
     });
   };
 
   render() {
-    const { inputOne, inputTwo } = this.state;
+    const { optionOneText, optionTwoText, toHome } = this.state;
+
+    if (toHome) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <Card variant="outlined" style={{ margin: 100 }}>
@@ -41,41 +57,44 @@ class AddView extends Component {
             Would you rather...
           </Typography>
 
-          <TextField
-            style={{ margin: 8 }}
-            placeholder="  Enter Text For Option ONE here"
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            value={inputOne}
-            onChange={this.handleChangeOne}
-          />
+          <form onSubmit={this.handleSubmit}>
+            <TextField
+              style={{ margin: 8 }}
+              placeholder="  Enter Text For Option ONE here"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              value={optionOneText}
+              onChange={this.handleChange('optionOneText')}
+            />
 
-          <Typography color="textSecondary" gutterBottom>
-            OR
-          </Typography>
+            <Typography color="textSecondary" gutterBottom>
+              OR
+            </Typography>
 
-          <TextField
-            style={{ margin: 8 }}
-            placeholder="  Enter Text For Option TWO here"
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            value={inputTwo}
-            onChange={this.handleChangeTwo}
-          />
+            <TextField
+              style={{ margin: 8 }}
+              placeholder="  Enter Text For Option TWO here"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              value={optionTwoText}
+              onChange={this.handleChange('optionTwoText')}
+            />
 
+            <CardActions>
+              <Button size="small" type="submit">
+                Add
+              </Button>
+            </CardActions>
+          </form>
           <br />
 
           <div></div>
         </CardContent>
-
-        <CardActions>
-          <Button size="small">Add</Button>
-        </CardActions>
       </Card>
     );
   }
 }
 
-export default AddView;
+export default connect()(AddView);
