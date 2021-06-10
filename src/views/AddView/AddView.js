@@ -83,7 +83,11 @@ class AddView extends Component {
             />
 
             <CardActions>
-              <Button size="small" type="submit">
+              <Button
+                size="small"
+                type="submit"
+                disabled={optionOneText === '' || optionTwoText === ''}
+              >
                 Add
               </Button>
             </CardActions>
