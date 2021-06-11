@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Box,
   Button,
   Card,
   CardContent,
@@ -13,7 +12,7 @@ import {
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import getQuestions, { saveQuestionAnswer } from '../../actions/questions';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import QuestionResults from './component/QuestionResults';
 
 class QuestionView extends Component {
   state = {
@@ -43,6 +42,8 @@ class QuestionView extends Component {
       voted: true,
     });
 
+    this.props.history.push(`/questions/${questionId}`);
+
     dispatch(
       saveQuestionAnswer({
         authedUser: 'sarahedo',
@@ -55,12 +56,6 @@ class QuestionView extends Component {
   render() {
     const { questionId, users, isLoading, questions } = this.props;
     const { voted, choiceValue } = this.state;
-
-    const sumVotes = () => {
-      return (
-        questions[questionId].optionOne.votes.length + questions[questionId].optionTwo.votes.length
-      );
-    };
 
     return (
       <>
@@ -95,7 +90,6 @@ class QuestionView extends Component {
                   </Typography>
                   <form onSubmit={(e) => this.handleSubmit(e)}>
                     <FormControl component="fieldset">
-                      {/* <FormLabel component="legend">Would you rather</FormLabel> */}
                       <RadioGroup
                         name="quiz"
                         value={choiceValue}
@@ -120,67 +114,7 @@ class QuestionView extends Component {
                 </div>
               ) : (
                 // Results
-                <div>
-                  <Typography variant="h5" component="h2">
-                    Results:
-                  </Typography>
-                  <br />
-                  <div>
-                    <Card variant="outlined">
-                      <CardContent>
-                        <Typography color="textSecondary" variant="body2" component="p">
-                          Would you rather {questions[questionId].optionOne.text}?
-                        </Typography>
-                        <Box>
-                          <LinearProgress
-                            variant="determinate"
-                            value={Math.round(
-                              (questions[questionId].optionOne.votes.length / sumVotes()) * 100
-                            )}
-                            style={{ height: 30, borderRadius: 5 }}
-                          />
-                          <Typography variant="body2" color="textSecondary">
-                            {`${Math.round(
-                              (questions[questionId].optionOne.votes.length / sumVotes()) * 100
-                            )}%`}
-                          </Typography>
-                        </Box>
-                        <Typography variant="body2" color="textSecondary">
-                          {`${
-                            questions[questionId].optionOne.votes.length
-                          } out of ${sumVotes()} votes`}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-
-                    <Card variant="outlined">
-                      <CardContent>
-                        <Typography color="textSecondary" variant="body2" component="p">
-                          Would you rather {questions[questionId].optionTwo.text}?
-                        </Typography>
-                        <Box>
-                          <LinearProgress
-                            variant="determinate"
-                            value={Math.round(
-                              (questions[questionId].optionTwo.votes.length / sumVotes()) * 100
-                            )}
-                            style={{ height: 30, borderRadius: 5 }}
-                          />
-                          <Typography variant="body2" color="textSecondary">
-                            {`${Math.round(
-                              (questions[questionId].optionTwo.votes.length / sumVotes()) * 100
-                            )}%`}
-                          </Typography>
-                        </Box>
-                        <Typography variant="body2" color="textSecondary">
-                          {`${
-                            questions[questionId].optionTwo.votes.length
-                          } out of ${sumVotes()} votes`}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
+                <QuestionResults questionId={questionId} />
               )}
             </CardContent>
           </Card>
