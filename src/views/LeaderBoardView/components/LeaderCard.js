@@ -9,36 +9,34 @@ class LeaderCard extends Component {
   }
 
   render() {
-    const { usersId, users } = this.props;
-
-    console.log(this.props);
+    const { users } = this.props;
 
     return (
       <>
-        {usersId.map((userId) => (
-          <Card key={userId} variant="outlined">
+        {users.map((user) => (
+          <Card key={user.id} variant="outlined">
             <CardContent>
               <div>
                 <img
-                  src={users[userId].avatarURL}
-                  alt={users[userId].name}
+                  src={user.avatarURL}
+                  alt={user.name}
                   style={{ height: 100, width: 100, marginRight: 12 }}
                 ></img>
               </div>
               <Typography variant="h5" component="h2">
-                {users[userId].name}
+                {user.name}
               </Typography>
               <Box>
                 <Typography color="textSecondary" variant="body2" component="p">
-                  Answered questions: {Object.keys(users[userId].answers).length}
+                  Created questions: {user.questions.length}
                 </Typography>
                 <Typography color="textSecondary" variant="body2" component="p">
-                  Created questions: {users[userId].questions.length}
+                  Answered questions: {user.answers.length}
                 </Typography>
               </Box>
               <Box>
                 <Typography variant="h5" component="h2">
-                  Score {Object.keys(users[userId].answers).length + users[userId].questions.length}
+                  Score {user.score}
                 </Typography>
               </Box>
             </CardContent>
@@ -51,8 +49,17 @@ class LeaderCard extends Component {
 
 function mapStateToProps({ users }) {
   return {
-    users,
-    usersId: Object.keys(users),
+    users: Object.values(users)
+      .map((user) => {
+        const answers = Object.values(user.answers);
+
+        return {
+          ...user,
+          answers,
+          score: answers.length + user.questions.length,
+        };
+      })
+      .sort((a, b) => b.score - a.score),
   };
 }
 
