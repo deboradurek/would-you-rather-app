@@ -134,15 +134,15 @@ class QuestionView extends Component {
                         <Box>
                           <LinearProgress
                             variant="determinate"
-                            value={
+                            value={Math.round(
                               (questions[questionId].optionOne.votes.length / sumVotes()) * 100
-                            }
+                            )}
                             style={{ height: 30, borderRadius: 5 }}
                           />
                           <Typography variant="body2" color="textSecondary">
-                            {`${
+                            {`${Math.round(
                               (questions[questionId].optionOne.votes.length / sumVotes()) * 100
-                            }%`}
+                            )}%`}
                           </Typography>
                         </Box>
                         <Typography variant="body2" color="textSecondary">
@@ -161,15 +161,15 @@ class QuestionView extends Component {
                         <Box>
                           <LinearProgress
                             variant="determinate"
-                            value={
+                            value={Math.round(
                               (questions[questionId].optionTwo.votes.length / sumVotes()) * 100
-                            }
+                            )}
                             style={{ height: 30, borderRadius: 5 }}
                           />
                           <Typography variant="body2" color="textSecondary">
-                            {`${
+                            {`${Math.round(
                               (questions[questionId].optionTwo.votes.length / sumVotes()) * 100
-                            }%`}
+                            )}%`}
                           </Typography>
                         </Box>
                         <Typography variant="body2" color="textSecondary">
