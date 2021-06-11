@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
-import getQuestions from '../../actions/questions';
+import getQuestions, { saveQuestionAnswer } from '../../actions/questions';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 class QuestionView extends Component {
@@ -34,11 +34,22 @@ class QuestionView extends Component {
   };
 
   handleSubmit = (e) => {
+    const { dispatch, questionId } = this.props;
+    const { choiceValue } = this.state;
+
     e.preventDefault();
 
     this.setState({
       voted: true,
     });
+
+    dispatch(
+      saveQuestionAnswer({
+        authedUser: 'sarahedo',
+        qid: questionId,
+        answer: choiceValue,
+      })
+    );
   };
 
   render() {
@@ -91,12 +102,12 @@ class QuestionView extends Component {
                         onChange={(e) => this.handleRadioChange(e)}
                       >
                         <FormControlLabel
-                          value={questions[questionId].optionOne.text}
+                          value={'optionOne'}
                           control={<Radio />}
                           label={questions[questionId].optionOne.text}
                         />
                         <FormControlLabel
-                          value={questions[questionId].optionTwo.text}
+                          value={'optionTwo'}
                           control={<Radio />}
                           label={questions[questionId].optionTwo.text}
                         />
