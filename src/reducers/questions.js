@@ -1,4 +1,9 @@
-import { RECEIVE_QUESTIONS, RECEIVING_QUESTIONS, SAVE_QUESTION } from '../actions/questions';
+import {
+  RECEIVE_QUESTIONS,
+  RECEIVING_QUESTIONS,
+  SAVE_QUESTION,
+  SAVE_QUESTION_ANSWER,
+} from '../actions/questions';
 
 const initialState = {
   isLoading: false,
@@ -29,6 +34,24 @@ export default function questions(state = initialState, action) {
           [question.id]: question,
         },
       };
+
+    case SAVE_QUESTION_ANSWER:
+      const { authedUser, qid, answer } = action;
+
+      return {
+        ...state,
+        questions: {
+          ...state.questions,
+          [qid]: {
+            ...state.questions[qid],
+            [answer]: {
+              ...state.questions[qid][answer],
+              votes: [...state.questions[qid][answer].votes, authedUser],
+            },
+          },
+        },
+      };
+
     default:
       return state;
   }
