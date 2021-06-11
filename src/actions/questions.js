@@ -1,9 +1,12 @@
 import { _getQuestions, _saveQuestion, _saveQuestionAnswer } from '../utils/_DATA';
+import { addUserAnswer } from './users';
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
 export const RECEIVING_QUESTIONS = 'RECEIVING_QUESTIONS';
 export const SAVE_QUESTION = 'SAVE_QUESTION';
 export const SAVE_QUESTION_ANSWER = 'SAVE_QUESTION_ANSWER';
+
+// Receive Questions
 
 function receiveQuestions(questions) {
   return {
@@ -17,6 +20,15 @@ function receivingQuestions() {
     type: RECEIVING_QUESTIONS,
   };
 }
+
+export default function getQuestions() {
+  return (dispatch) => {
+    dispatch(receivingQuestions());
+    return _getQuestions().then((questions) => dispatch(receiveQuestions(questions)));
+  };
+}
+
+// Save Questions
 
 function addQuestion(question) {
   return {
@@ -37,6 +49,8 @@ export function saveQuestion(optionOneText, optionTwoText, author) {
   };
 }
 
+// Save Questions Answer
+
 function addQuestionAnswer({ authedUser, qid, answer }) {
   return {
     type: SAVE_QUESTION_ANSWER,
@@ -48,13 +62,9 @@ function addQuestionAnswer({ authedUser, qid, answer }) {
 
 export function saveQuestionAnswer(info) {
   return (dispatch) => {
-    return _saveQuestionAnswer(info).then(() => dispatch(addQuestionAnswer(info)));
-  };
-}
-
-export default function getQuestions() {
-  return (dispatch) => {
-    dispatch(receivingQuestions());
-    return _getQuestions().then((questions) => dispatch(receiveQuestions(questions)));
+    return _saveQuestionAnswer(info).then(() => {
+      dispatch(addQuestionAnswer(info));
+      dispatch(addUserAnswer(info));
+    });
   };
 }
