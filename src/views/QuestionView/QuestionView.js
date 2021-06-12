@@ -16,7 +16,6 @@ import QuestionResults from './component/QuestionResults';
 
 class QuestionView extends Component {
   state = {
-    voted: false,
     choiceValue: '',
   };
 
@@ -38,12 +37,6 @@ class QuestionView extends Component {
 
     e.preventDefault();
 
-    this.setState({
-      voted: true,
-    });
-
-    this.props.history.push(`/questions/${questionId}`);
-
     dispatch(
       saveQuestionAnswer({
         authedUser: 'sarahedo',
@@ -54,8 +47,8 @@ class QuestionView extends Component {
   };
 
   render() {
-    const { questionId, users, isLoading, questions } = this.props;
-    const { voted, choiceValue } = this.state;
+    const { questionId, users, isLoading, questions, voted } = this.props;
+    const { choiceValue } = this.state;
 
     return (
       <>
@@ -136,6 +129,7 @@ function mapStateToProps({ users, questions: { isLoading, questions } }, props) 
   return {
     questionId: question_id,
     users,
+    voted: Boolean(users['sarahedo'].answers[question_id]),
     isLoading,
     questions,
   };
