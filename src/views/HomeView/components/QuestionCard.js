@@ -50,11 +50,9 @@ class QuestionCard extends Component {
   }
 }
 
-function mapStateToProps({ users, questions: { questions } }, { questionId }) {
-  const question = questions[questionId];
+function mapStateToProps({ users }) {
   return {
     users,
-    question,
   };
 }
 

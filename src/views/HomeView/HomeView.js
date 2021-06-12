@@ -23,7 +23,7 @@ class HomeView extends Component {
 
   render() {
     const { tabIndex } = this.state;
-    const { isLoading, questionsIds } = this.props;
+    const { isLoading, answeredQuestions, unansweredQuestions } = this.props;
 
     return (
       <>
@@ -36,14 +36,15 @@ class HomeView extends Component {
 
         {!isLoading ? (
           <>
-            {questionsIds.map((questionId) => (
-              <TabPanel key={questionId} value={tabIndex} index={0}>
-                <QuestionCard questionId={questionId} />
-              </TabPanel>
-            ))}
-
+            <TabPanel value={tabIndex} index={0}>
+              {unansweredQuestions.map((question) => (
+                <QuestionCard key={question.id} question={question} />
+              ))}
+            </TabPanel>
             <TabPanel value={tabIndex} index={1}>
-              Unanswered Questions
+              {answeredQuestions.map((question) => (
+                <QuestionCard key={question.id} question={question} />
+              ))}
             </TabPanel>
           </>
         ) : (
@@ -60,12 +61,13 @@ class HomeView extends Component {
   }
 }
 
-function mapStateToProps({ questions: { isLoading, questions } }) {
+function mapStateToProps({ users, questions: { isLoading, questions } }) {
+  const sortedQuestions = Object.values(questions).sort((a, b) => b.timestamp - a.timestamp);
+  const userAnswers = users['sarahedo'].answers;
   return {
     isLoading,
-    questionsIds: Object.keys(questions).sort(
-      (a, b) => questions[b].timestamp - questions[a].timestamp
-    ),
+    answeredQuestions: sortedQuestions.filter((q) => userAnswers[q.id]),
+    unansweredQuestions: sortedQuestions.filter((q) => !userAnswers[q.id]),
   };
 }
 
