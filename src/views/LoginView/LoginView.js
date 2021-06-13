@@ -1,15 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { Container, FormControl, MenuItem, Select } from '@material-ui/core';
+import {
+  Box,
+  CardContent,
+  CardActions,
+  Card,
+  Container,
+  FormControl,
+  MenuItem,
+  Select,
+  Typography,
+  Button,
+} from '@material-ui/core';
+import { setAuthedUser } from '../../actions/authedUser';
 
 class LoginView extends Component {
+  state = {
+    selectedUser: '',
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      selectedUser: e.target.value,
+    });
+  };
+
+  handleClick = (e) => {
+    e.preventDefault();
+
+    const { dispatch, users } = this.props;
+    const { selectedUser } = this.state;
+
+    const { id, name, avatarURL } = users.find((u) => u.id === selectedUser);
+
+    dispatch(setAuthedUser({ id, name, avatarURL }));
+  };
+
   render() {
     const { users } = this.props;
+    const { selectedUser } = this.state;
+
+    console.log(this.state.selectedUser);
 
     return (
       <Container maxWidth="sm">
@@ -26,9 +57,9 @@ class LoginView extends Component {
             </Typography>
             <FormControl variant="filled">
               <Select
-                value=""
-                //   onChange={handleChange}
-                style={{ minWidth: 200 }}
+                value={selectedUser}
+                onChange={this.handleChange}
+                style={{ minWidth: 300 }}
                 displayEmpty
               >
                 <MenuItem value="" disabled>
@@ -36,19 +67,23 @@ class LoginView extends Component {
                 </MenuItem>
                 {users.map((user) => (
                   <MenuItem key={user.id} value={user.id}>
-                    <img
-                      src={user.avatarURL}
-                      alt={user.name}
-                      style={{ height: 36, width: 36, marginRight: 12 }}
-                    ></img>
-                    {user.name}
+                    <Box display="flex" alignItems="center">
+                      <img
+                        src={user.avatarURL}
+                        alt={user.name}
+                        style={{ height: 36, width: 36, marginRight: 12 }}
+                      ></img>
+                      <Typography component="span">{user.name}</Typography>
+                    </Box>
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
           </CardContent>
           <CardActions>
-            <Button size="small">Sign in</Button>
+            <Button size="small" onClick={this.handleClick}>
+              Sign in
+            </Button>
           </CardActions>
         </Card>
       </Container>
