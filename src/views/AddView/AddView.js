@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import { Button, Card, CardActions, CardContent, TextField, Typography } from '@material-ui/core';
 import { saveQuestion } from '../../actions/questions';
-import { Redirect } from 'react-router';
 
 class AddView extends Component {
   state = {
@@ -24,9 +24,9 @@ class AddView extends Component {
     e.preventDefault();
 
     const { optionOneText, optionTwoText } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, authedUser } = this.props;
 
-    dispatch(saveQuestion(optionOneText, optionTwoText, 'sarahedo'));
+    dispatch(saveQuestion(optionOneText, optionTwoText, authedUser));
 
     this.setState({
       optionOneText: '',
@@ -93,12 +93,16 @@ class AddView extends Component {
             </CardActions>
           </form>
           <br />
-
-          <div></div>
         </CardContent>
       </Card>
     );
   }
 }
 
-export default connect()(AddView);
+function mapStateToProps({ authedUser }) {
+  return {
+    authedUser: authedUser.id,
+  };
+}
+
+export default connect(mapStateToProps)(AddView);

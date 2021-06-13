@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  Box,
   Button,
   Card,
   CardContent,
@@ -32,14 +33,14 @@ class QuestionView extends Component {
   };
 
   handleSubmit = (e) => {
-    const { dispatch, questionId } = this.props;
+    const { dispatch, questionId, authedUser } = this.props;
     const { choiceValue } = this.state;
 
     e.preventDefault();
 
     dispatch(
       saveQuestionAnswer({
-        authedUser: 'sarahedo',
+        authedUser,
         qid: questionId,
         answer: choiceValue,
       })
@@ -67,17 +68,17 @@ class QuestionView extends Component {
                 </Typography>
               )}
 
-              <div>
+              <Box>
                 <img
                   src={users[questions[questionId].author].avatarURL}
                   alt={users.name}
                   style={{ height: 150, width: 150, marginTop: 40 }}
                 ></img>
-              </div>
+              </Box>
 
               {!voted ? (
                 // Question
-                <div>
+                <Box>
                   <Typography variant="h5" component="h2">
                     Would you rather
                   </Typography>
@@ -104,7 +105,7 @@ class QuestionView extends Component {
                       </Button>
                     </FormControl>
                   </form>
-                </div>
+                </Box>
               ) : (
                 // Results
                 <QuestionResults questionId={questionId} />
@@ -123,13 +124,14 @@ class QuestionView extends Component {
   }
 }
 
-function mapStateToProps({ users, questions: { isLoading, questions } }, props) {
+function mapStateToProps({ authedUser, users, questions: { isLoading, questions } }, props) {
   const { question_id } = props.match.params;
 
   return {
     questionId: question_id,
+    authedUser: authedUser.id,
     users,
-    voted: Boolean(users['sarahedo'].answers[question_id]),
+    voted: Boolean(users[authedUser.id].answers[question_id]),
     isLoading,
     questions,
   };

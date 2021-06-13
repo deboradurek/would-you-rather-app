@@ -23,7 +23,7 @@ class HomeView extends Component {
 
   render() {
     const { tabIndex } = this.state;
-    const { isLoading, answeredQuestions, unansweredQuestions } = this.props;
+    const { authedUser, isLoading, answeredQuestions, unansweredQuestions } = this.props;
 
     return (
       <>
@@ -61,10 +61,11 @@ class HomeView extends Component {
   }
 }
 
-function mapStateToProps({ users, questions: { isLoading, questions } }) {
+function mapStateToProps({ authedUser, users, questions: { isLoading, questions } }) {
   const sortedQuestions = Object.values(questions).sort((a, b) => b.timestamp - a.timestamp);
-  const userAnswers = users['sarahedo'].answers;
+  const userAnswers = users[authedUser.id].answers;
   return {
+    authedUser: authedUser.id,
     isLoading,
     answeredQuestions: sortedQuestions.filter((q) => userAnswers[q.id]),
     unansweredQuestions: sortedQuestions.filter((q) => !userAnswers[q.id]),
