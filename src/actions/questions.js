@@ -1,5 +1,5 @@
 import { _getQuestions, _saveQuestion, _saveQuestionAnswer } from '../utils/_DATA';
-import { addUserAnswer } from './users';
+import { addUserAnswer, saveQuestionToUser } from './users';
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
 export const RECEIVING_QUESTIONS = 'RECEIVING_QUESTIONS';
@@ -45,6 +45,7 @@ export function saveQuestion(optionOneText, optionTwoText, author) {
       author,
     }).then((question) => {
       dispatch(addQuestion(question));
+      dispatch(saveQuestionToUser(question));
     });
   };
 }
