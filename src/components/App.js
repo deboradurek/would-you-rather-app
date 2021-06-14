@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import getUsers from '../actions/users';
@@ -15,30 +15,39 @@ class App extends Component {
   }
 
   render() {
-    const { users } = this.props;
+    const { users, isAuthenticated } = this.props;
 
     return (
       <Router>
         <>
           <NavBar />
-          {users && (
-            <>
-              <Route path="/" exact component={HomeView} />
-              <Route path="/questions/:question_id" component={QuestionView} />
-              <Route path="/add" component={AddView} />
-              <Route path="/leaderboard" component={LeaderBoardView} />
-              <Route path="/login" component={LoginView} />
-            </>
-          )}
+          <Switch>
+            {users &&
+              (isAuthenticated ? (
+                <>
+                  <Route path="/" exact component={HomeView} />
+                  <Route path="/questions/:question_id" component={QuestionView} />
+                  <Route path="/add" component={AddView} />
+                  <Route path="/leaderboard" component={LeaderBoardView} />
+                  <Route path="*" render={() => <Redirect to="/" />} />
+                </>
+              ) : (
+                <>
+                  <Route path="/login" component={LoginView} />
+                  <Route path="*" render={() => <Redirect to="/login" />} />
+                </>
+              ))}
+          </Switch>
         </>
       </Router>
     );
   }
 }
 
-function mapStateToProps({ users }) {
+function mapStateToProps({ users, authedUser }) {
   return {
     users,
+    isAuthenticated: Boolean(authedUser),
   };
 }
 
