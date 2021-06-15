@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { setAuthedUser } from '../../actions/authedUser';
 import { AppBar, Avatar, Button, Typography } from '@material-ui/core';
-import { GroupedLinks, NavAuthedUser, StyledToolbar } from './styles';
+import { GroupedLinks, LogoName, NavAuthedUser, StyledToolbar } from './styles';
 
 class NavBar extends Component {
+  // Set AuthedUser to null after logout
+  handleLogout = (e) => {
+    const { dispatch } = this.props;
+
+    e.preventDefault();
+
+    dispatch(setAuthedUser(null));
+  };
+
   render() {
     const { authedUser, isAuthenticated } = this.props;
 
     return (
       <AppBar position="sticky">
         <StyledToolbar>
-          <Typography variant="h5">Would You Rather...</Typography>
+          <LogoName>WOULD YOU RATHER...</LogoName>
           {isAuthenticated && (
             <>
               <GroupedLinks>
@@ -22,7 +32,7 @@ class NavBar extends Component {
               <NavAuthedUser>
                 <Typography>Hello, {authedUser.name}</Typography>
                 <Avatar alt={authedUser.name} src={authedUser.avatarURL} />
-                <Button>Logout</Button>
+                <Button onClick={this.handleLogout}>Logout</Button>
               </NavAuthedUser>
             </>
           )}
