@@ -6,7 +6,7 @@ import {
 } from '../actions/questions';
 
 const initialState = {
-  isLoading: false,
+  isLoading: true,
   questions: {},
 };
 
