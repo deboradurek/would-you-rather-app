@@ -12,6 +12,11 @@ export const StyledToolbar = styled(Toolbar)`
   }
 `;
 
+export const LogoName = styled.span`
+  font-family: 'Lilita One', cursive;
+  font-size: 2rem;
+`;
+
 export const GroupedLinks = styled.div`
   a {
     color: ${(props) => props.theme.offWhite};

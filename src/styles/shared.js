@@ -1,0 +1,29 @@
+import styled from 'styled-components';
+import { Card, Box, CardActions } from '@material-ui/core';
+
+export const StyledMainCard = styled(Card)`
+  margin: 100px 0;
+  text-align: center;
+  padding-bottom: 28px;
+`;
+
+export const StyledTitle = styled.h4`
+  color: ${(props) => props.theme.secondary};
+  margin: 10px;
+`;
+
+export const StyledUserSpan = styled.span`
+  color: ${(props) => props.theme.primary};
+  margin-left: 12px;
+`;
+
+export const StyledBox = styled(Box)`
+  display: flex;
+  align-items: center;
+`;
+
+export const StyledCardActions = styled(CardActions)`
+  display: flex;
+  justify-content: center;
+  /* padding-bottom: 20px; */
+`;
