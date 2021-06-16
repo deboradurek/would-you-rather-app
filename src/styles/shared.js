@@ -1,10 +1,21 @@
 import styled from 'styled-components';
-import { Card, Box, CardActions } from '@material-ui/core';
+import { Card, Box, CardActions, CardContent } from '@material-ui/core';
 
 export const StyledMainCard = styled(Card)`
   margin: 100px 0;
   text-align: center;
   padding-bottom: 28px;
+`;
+
+export const StyledCard = styled(Card)`
+  margin: 14px 0;
+`;
+
+export const StyledCardContent = styled(CardContent)`
+  display: flex;
+  && {
+    padding: 36px 32px;
+  }
 `;
 
 export const StyledTitle = styled.h4`
@@ -17,7 +28,7 @@ export const StyledUserSpan = styled.span`
   margin-left: 12px;
 `;
 
-export const StyledBox = styled(Box)`
+export const StyledBoxMenuLogin = styled(Box)`
   display: flex;
   align-items: center;
 `;
@@ -25,5 +36,13 @@ export const StyledBox = styled(Box)`
 export const StyledCardActions = styled(CardActions)`
   display: flex;
   justify-content: center;
-  /* padding-bottom: 20px; */
+  margin-top: 20px;
+`;
+
+export const StyledBoxQuestion = styled(Box)`
+  margin-left: 28px;
+  width: 100%;
+  div a {
+    width: 100%;
+  }
 `;

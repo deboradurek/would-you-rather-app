@@ -13,7 +13,7 @@ import {
   Divider,
 } from '@material-ui/core';
 import {
-  StyledBox,
+  StyledBoxMenuLogin,
   StyledCardActions,
   StyledMainCard,
   StyledUserSpan,
@@ -70,10 +70,10 @@ class LoginView extends Component {
                 </MenuItem>
                 {users.map((user) => (
                   <MenuItem key={user.id} value={user.id}>
-                    <StyledBox>
+                    <StyledBoxMenuLogin>
                       <Avatar src={user.avatarURL} alt={user.name}></Avatar>
                       <StyledUserSpan>{user.name}</StyledUserSpan>
-                    </StyledBox>
+                    </StyledBoxMenuLogin>
                   </MenuItem>
                 ))}
               </Select>

@@ -14,7 +14,15 @@ body {
 }
 
 .login-avatar {
-  height: 36px;
-  width: 36px;
   margin-right: 12px;
+}
+
+.avatar-question {
+  height: 150px;
+  width: 150px;
+  margin-right: 40px;
+}
+
+.full-width {
+  width: 100%;
 }
