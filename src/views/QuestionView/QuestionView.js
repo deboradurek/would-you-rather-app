@@ -16,10 +16,12 @@ import {
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import {
+  StyledBoxFlexCenter,
   StyledBoxQuestion,
   StyledCardActions,
   StyledCardContent,
   StyledMainCard,
+  StyledRadioGroup,
 } from '../../styles/shared';
 
 class QuestionView extends Component {
@@ -81,13 +83,13 @@ class QuestionView extends Component {
                 <Divider />
 
                 <StyledCardContent>
-                  <Box>
+                  <StyledBoxFlexCenter>
                     <img
                       src={selectedUser.avatarURL}
                       alt={selectedUser.name}
                       className="avatar-question"
                     ></img>
-                  </Box>
+                  </StyledBoxFlexCenter>
 
                   <Divider orientation="vertical" flexItem />
 
@@ -99,7 +101,7 @@ class QuestionView extends Component {
                       </Typography>
 
                       <form onSubmit={(e) => this.handleSubmit(e)}>
-                        <RadioGroup
+                        <StyledRadioGroup
                           name="quiz"
                           value={choiceValue}
                           onChange={(e) => this.handleRadioChange(e)}
@@ -114,7 +116,7 @@ class QuestionView extends Component {
                             control={<Radio />}
                             label={question.optionTwo.text}
                           />
-                        </RadioGroup>
+                        </StyledRadioGroup>
 
                         <StyledCardActions>
                           <Button

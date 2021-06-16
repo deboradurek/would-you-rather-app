@@ -1,84 +1,74 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Box, Card, CardContent, LinearProgress, Typography } from '@material-ui/core';
+import { Box, Card, CardContent, LinearProgress, Paper, Typography } from '@material-ui/core';
+import {
+  StyledBoxFlexCenter,
+  StyledBoxQuestion,
+  StyledBoxResults,
+  StyledCard,
+  StyledLinearProgress,
+} from '../../../styles/shared';
 
 class QuestionResults extends Component {
   render() {
-    const { questionId, questions } = this.props;
+    const { question } = this.props;
 
     const sumVotes = () => {
-      return (
-        questions[questionId].optionOne.votes.length + questions[questionId].optionTwo.votes.length
-      );
+      return question.optionOne.votes.length + question.optionTwo.votes.length;
     };
 
     return (
-      <div>
-        <Typography variant="h5" component="h2">
+      <StyledBoxQuestion>
+        <Typography variant="h5" component="h2" color="primary" gutterBottom>
           Results:
         </Typography>
-        <br />
-        <div>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography color="textSecondary" variant="body2" component="p">
-                Would you rather {questions[questionId].optionOne.text}?
-              </Typography>
-              <Box>
-                <LinearProgress
-                  variant="determinate"
-                  value={Math.round(
-                    (questions[questionId].optionOne.votes.length / sumVotes()) * 100
-                  )}
-                  style={{ height: 30, borderRadius: 5 }}
-                />
-                <Typography variant="body2" color="textSecondary">
-                  {`${Math.round(
-                    (questions[questionId].optionOne.votes.length / sumVotes()) * 100
-                  )}%`}
-                </Typography>
-              </Box>
-              <Typography variant="body2" color="textSecondary">
-                {`${questions[questionId].optionOne.votes.length} out of ${sumVotes()} votes`}
-              </Typography>
-            </CardContent>
-          </Card>
 
-          <Card variant="outlined">
-            <CardContent>
-              <Typography color="textSecondary" variant="body2" component="p">
-                Would you rather {questions[questionId].optionTwo.text}?
+        <Box>
+          <StyledBoxResults>
+            <Typography color="primary" variant="body2" component="p" gutterBottom>
+              Would you rather {question.optionOne.text}?
+            </Typography>
+
+            <StyledBoxFlexCenter>
+              <StyledLinearProgress
+                variant="determinate"
+                value={Math.round((question.optionOne.votes.length / sumVotes()) * 100)}
+                color="secondary"
+              />
+              <Typography variant="body2" color="primary">
+                {`${Math.round((question.optionOne.votes.length / sumVotes()) * 100)}%`}
               </Typography>
-              <Box>
-                <LinearProgress
-                  variant="determinate"
-                  value={Math.round(
-                    (questions[questionId].optionTwo.votes.length / sumVotes()) * 100
-                  )}
-                  style={{ height: 30, borderRadius: 5 }}
-                />
-                <Typography variant="body2" color="textSecondary">
-                  {`${Math.round(
-                    (questions[questionId].optionTwo.votes.length / sumVotes()) * 100
-                  )}%`}
-                </Typography>
-              </Box>
-              <Typography variant="body2" color="textSecondary">
-                {`${questions[questionId].optionTwo.votes.length} out of ${sumVotes()} votes`}
+            </StyledBoxFlexCenter>
+            <Box textAlign="center">
+              <Typography variant="caption" color="textSecondary">
+                {`${question.optionOne.votes.length} out of ${sumVotes()} votes`}
               </Typography>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+            </Box>
+          </StyledBoxResults>
+
+          <StyledBoxResults>
+            <Typography color="primary" variant="body2" component="p" gutterBottom>
+              Would you rather {question.optionTwo.text}?
+            </Typography>
+            <StyledBoxFlexCenter>
+              <StyledLinearProgress
+                variant="determinate"
+                value={Math.round((question.optionTwo.votes.length / sumVotes()) * 100)}
+                color="secondary"
+              />
+              <Typography variant="body2" color="primary">
+                {`${Math.round((question.optionTwo.votes.length / sumVotes()) * 100)}%`}
+              </Typography>
+            </StyledBoxFlexCenter>
+            <Box textAlign="center">
+              <Typography variant="caption" color="textSecondary">
+                {`${question.optionTwo.votes.length} out of ${sumVotes()} votes`}
+              </Typography>
+            </Box>
+          </StyledBoxResults>
+        </Box>
+      </StyledBoxQuestion>
     );
   }
 }
 
-function mapStateToProps({ questions: { questions } }, { questionId }) {
-  return {
-    questionId,
-    questions,
-  };
-}
-
-export default connect(mapStateToProps)(QuestionResults);
+export default QuestionResults;
