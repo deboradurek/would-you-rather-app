@@ -4,14 +4,12 @@ import { Redirect } from 'react-router';
 import getQuestions, { saveQuestionAnswer } from '../../actions/questions';
 import QuestionResults from './component/QuestionResults';
 import {
-  Box,
   Button,
   CardHeader,
   Container,
   Divider,
   FormControlLabel,
   Radio,
-  RadioGroup,
   Typography,
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';

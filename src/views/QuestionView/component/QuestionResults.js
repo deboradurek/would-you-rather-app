@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Box, Card, CardContent, LinearProgress, Paper, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import {
   StyledBoxFlexCenter,
   StyledBoxQuestion,
   StyledBoxResults,
-  StyledCard,
   StyledLinearProgress,
 } from '../../../styles/shared';
 
