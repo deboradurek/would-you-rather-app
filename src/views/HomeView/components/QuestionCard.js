@@ -31,7 +31,6 @@ class QuestionCard extends Component {
                   <Typography color="secondary">{users[question.author].name} asks:</Typography>
                 }
               />
-
               <Divider />
 
               <StyledCardContent>
@@ -46,13 +45,14 @@ class QuestionCard extends Component {
                 <Divider orientation="vertical" flexItem />
 
                 <StyledBoxQuestion>
-                  <Typography variant="h5" component="h2" color="primary">
+                  <Typography variant="h5" component="h2" color="primary" gutterBottom>
                     Would you rather
                   </Typography>
                   <br />
                   <Typography color="textSecondary" variant="body2" component="p">
                     ... {question.optionOne.text} ...
                   </Typography>
+
                   <StyledCardActions>
                     <Link to={`/questions/${question.id}`}>
                       <Button

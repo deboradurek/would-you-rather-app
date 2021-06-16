@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import getUsers from '../actions/users';
@@ -8,10 +8,14 @@ import QuestionView from '../views/QuestionView/QuestionView';
 import AddView from '../views/AddView/AddView';
 import LeaderBoardView from '../views/LeaderBoardView/LeaderBoardView';
 import LoginView from '../views/LoginView/LoginView';
+import NotFoundView from '../views/NotFoundView/NotFoundView';
 
 class App extends Component {
+  // Get Users data
   componentDidMount() {
-    this.props.dispatch(getUsers());
+    const { dispatch } = this.props;
+
+    dispatch(getUsers());
   }
 
   render() {
@@ -29,12 +33,12 @@ class App extends Component {
                   <Route path="/questions/:question_id" component={QuestionView} />
                   <Route path="/add" component={AddView} />
                   <Route path="/leaderboard" component={LeaderBoardView} />
-                  <Route path="*" render={() => <Redirect to="/" />} />
+                  <Route path="/not-found" component={NotFoundView} />
                 </>
               ) : (
                 <>
                   <Route path="/login" component={LoginView} />
-                  <Route path="*" render={() => <Redirect to="/login" />} />
+                  <Route path="*" component={LoginView} />
                 </>
               ))}
           </Switch>
