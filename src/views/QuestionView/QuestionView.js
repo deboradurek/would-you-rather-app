@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
+import getQuestions, { saveQuestionAnswer } from '../../actions/questions';
+import QuestionResults from './component/QuestionResults';
 import {
   Box,
   Button,
-  Card,
-  CardContent,
-  FormControl,
+  CardHeader,
+  Container,
+  Divider,
   FormControlLabel,
   Radio,
   RadioGroup,
   Typography,
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
-import getQuestions, { saveQuestionAnswer } from '../../actions/questions';
-import QuestionResults from './component/QuestionResults';
+import {
+  StyledBoxQuestion,
+  StyledCardActions,
+  StyledCardContent,
+  StyledMainCard,
+} from '../../styles/shared';
 
 class QuestionView extends Component {
   state = {
     choiceValue: '',
   };
 
+  // Get questions
   componentDidMount() {
     this.props.dispatch(getQuestions());
   }
@@ -48,77 +56,90 @@ class QuestionView extends Component {
   };
 
   render() {
-    const { questionId, users, isLoading, questions, voted } = this.props;
+    const { selectedUser, isLoading, question, voted } = this.props;
     const { choiceValue } = this.state;
+
+    if (!question && !isLoading) {
+      return <Redirect to="/not-found" />;
+    }
 
     return (
       <>
-        {!isLoading ? (
-          <Card variant="outlined" style={{ margin: 100 }}>
-            <CardContent>
-              {!voted ? (
-                // Question card title
-                <Typography color="textSecondary" gutterBottom>
-                  {users[questions[questionId].author].name} asks:
-                </Typography>
-              ) : (
-                // Results card title
-                <Typography color="textSecondary" gutterBottom>
-                  Asked by {users[questions[questionId].author].name}:
-                </Typography>
-              )}
+        <Container maxWidth="sm">
+          <StyledMainCard>
+            {!isLoading ? (
+              <>
+                <CardHeader
+                  subheader={
+                    !voted ? (
+                      <Typography color="secondary">{selectedUser.name} asks:</Typography>
+                    ) : (
+                      <Typography color="secondary">Asked by {selectedUser.name}</Typography>
+                    )
+                  }
+                />
+                <Divider />
 
-              <Box>
-                <img
-                  src={users[questions[questionId].author].avatarURL}
-                  alt={users.name}
-                  style={{ height: 150, width: 150, marginTop: 40 }}
-                ></img>
-              </Box>
+                <StyledCardContent>
+                  <Box>
+                    <img
+                      src={selectedUser.avatarURL}
+                      alt={selectedUser.name}
+                      className="avatar-question"
+                    ></img>
+                  </Box>
 
-              {!voted ? (
-                // Question
-                <Box>
-                  <Typography variant="h5" component="h2">
-                    Would you rather
-                  </Typography>
-                  <form onSubmit={(e) => this.handleSubmit(e)}>
-                    <FormControl component="fieldset">
-                      <RadioGroup
-                        name="quiz"
-                        value={choiceValue}
-                        onChange={(e) => this.handleRadioChange(e)}
-                      >
-                        <FormControlLabel
-                          value={'optionOne'}
-                          control={<Radio />}
-                          label={questions[questionId].optionOne.text}
-                        />
-                        <FormControlLabel
-                          value={'optionTwo'}
-                          control={<Radio />}
-                          label={questions[questionId].optionTwo.text}
-                        />
-                      </RadioGroup>
-                      <Button type="submit" variant="outlined" color="primary">
-                        Vote
-                      </Button>
-                    </FormControl>
-                  </form>
-                </Box>
-              ) : (
-                // Results
-                <QuestionResults questionId={questionId} />
-              )}
-            </CardContent>
-          </Card>
-        ) : (
-          <Card variant="outlined">
-            <CardContent>
-              <Skeleton variant="rect" height={300} />
-            </CardContent>
-          </Card>
-        )}
+                  <Divider orientation="vertical" flexItem />
+
+                  {!voted ? (
+                    // Question
+                    <StyledBoxQuestion>
+                      <Typography variant="h5" component="h2" color="primary" gutterBottom>
+                        Would you rather
+                      </Typography>
+
+                      <form onSubmit={(e) => this.handleSubmit(e)}>
+                        <RadioGroup
+                          name="quiz"
+                          value={choiceValue}
+                          onChange={(e) => this.handleRadioChange(e)}
+                        >
+                          <FormControlLabel
+                            value={'optionOne'}
+                            control={<Radio />}
+                            label={question.optionOne.text}
+                          />
+                          <FormControlLabel
+                            value={'optionTwo'}
+                            control={<Radio />}
+                            label={question.optionTwo.text}
+                          />
+                        </RadioGroup>
+
+                        <StyledCardActions>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            size="large"
+                            color="primary"
+                            fullWidth
+                          >
+                            Vote
+                          </Button>
+                        </StyledCardActions>
+                      </form>
+                    </StyledBoxQuestion>
+                  ) : (
+                    // Results
+                    <QuestionResults question={question} />
+                  )}
+                </StyledCardContent>
+              </>
+            ) : (
+              <Skeleton animation="wave" variant="rect" height={340} />
+            )}
+          </StyledMainCard>
+        </Container>
       </>
     );
   }
@@ -127,13 +148,15 @@ class QuestionView extends Component {
 function mapStateToProps({ authedUser, users, questions: { isLoading, questions } }, props) {
   const { question_id } = props.match.params;
 
+  const question = questions[question_id];
+
   return {
     questionId: question_id,
     authedUser: authedUser.id,
-    users,
     voted: Boolean(users[authedUser.id].answers[question_id]),
     isLoading,
-    questions,
+    question,
+    selectedUser: users[question?.author],
   };
 }
 

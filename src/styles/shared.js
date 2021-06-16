@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { Card, Box, CardActions, CardContent } from '@material-ui/core';
 
-export const StyledMainCard = styled(Card)`
-  margin: 100px 0;
+export const StyledMainCardCenter = styled(Card)`
+  margin: 80px 0;
   text-align: center;
   padding-bottom: 28px;
+`;
+
+export const StyledMainCard = styled(Card)`
+  margin: 80px 0;
 `;
 
 export const StyledCard = styled(Card)`
