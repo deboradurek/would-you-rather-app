@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AppBar, Card, CardContent, Tab, Tabs } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
+import getQuestions from '../../actions/questions';
 import TabPanel from '../../components/TabPanel';
 import QuestionCard from './components/QuestionCard';
-import getQuestions from '../../actions/questions';
+import { Tab, Tabs } from '@material-ui/core';
+import { StyledAppBar } from './styles';
 
 class HomeView extends Component {
   state = {
     tabIndex: 0,
   };
 
+  // Get Questions
   componentDidMount() {
     this.props.dispatch(getQuestions());
   }
 
-  handleChange = (e, newTabIndex) => {
+  // Change unsanswered/answered tab
+  handleChange = (_, newTabIndex) => {
     this.setState({
       tabIndex: newTabIndex,
     });
@@ -23,50 +25,39 @@ class HomeView extends Component {
 
   render() {
     const { tabIndex } = this.state;
-    const { authedUser, isLoading, answeredQuestions, unansweredQuestions } = this.props;
+    const { answeredQuestions, unansweredQuestions } = this.props;
 
     return (
       <>
-        <AppBar position="static">
+        <StyledAppBar position="static">
           <Tabs centered value={tabIndex} onChange={this.handleChange}>
             <Tab label="Unanswered Questions" />
             <Tab label="Answered Questions" />
           </Tabs>
-        </AppBar>
+        </StyledAppBar>
 
-        {!isLoading ? (
-          <>
-            <TabPanel value={tabIndex} index={0}>
-              {unansweredQuestions.map((question) => (
-                <QuestionCard key={question.id} question={question} />
-              ))}
-            </TabPanel>
-            <TabPanel value={tabIndex} index={1}>
-              {answeredQuestions.map((question) => (
-                <QuestionCard key={question.id} question={question} />
-              ))}
-            </TabPanel>
-          </>
-        ) : (
-          Array.from({ length: 3 }).map((_, index) => (
-            <Card variant="outlined" key={`placeholder-${index}`}>
-              <CardContent>
-                <Skeleton variant="rect" height={300} />
-              </CardContent>
-            </Card>
-          ))
-        )}
+        <>
+          <TabPanel value={tabIndex} index={0}>
+            {unansweredQuestions.map((question) => (
+              <QuestionCard key={question.id} question={question} />
+            ))}
+          </TabPanel>
+          <TabPanel value={tabIndex} index={1}>
+            {answeredQuestions.map((question) => (
+              <QuestionCard key={question.id} question={question} />
+            ))}
+          </TabPanel>
+        </>
       </>
     );
   }
 }
 
-function mapStateToProps({ authedUser, users, questions: { isLoading, questions } }) {
+function mapStateToProps({ authedUser, users, questions: { questions } }) {
   const sortedQuestions = Object.values(questions).sort((a, b) => b.timestamp - a.timestamp);
   const userAnswers = users[authedUser.id].answers;
   return {
     authedUser: authedUser.id,
-    isLoading,
     answeredQuestions: sortedQuestions.filter((q) => userAnswers[q.id]),
     unansweredQuestions: sortedQuestions.filter((q) => !userAnswers[q.id]),
   };
