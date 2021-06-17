@@ -122,6 +122,7 @@ class QuestionView extends Component {
                           size="large"
                           color="primary"
                           fullWidth
+                          disabled={choiceValue === ''}
                         >
                           Vote
                         </Button>
