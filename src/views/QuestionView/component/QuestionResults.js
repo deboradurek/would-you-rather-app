@@ -33,11 +33,11 @@ class QuestionResults extends Component {
                 value={Math.round((question.optionOne.votes.length / sumVotes()) * 100)}
                 color="secondary"
               />
-              <Typography variant="body2" color="primary">
+              <Typography variant="body2" color="secondary">
                 {`${Math.round((question.optionOne.votes.length / sumVotes()) * 100)}%`}
               </Typography>
             </StyledBoxFlexCenter>
-            <Box textAlign="center">
+            <Box textAlign="center" fontStyle="italic">
               <Typography variant="caption" color="textSecondary">
                 {`${question.optionOne.votes.length} out of ${sumVotes()} votes`}
               </Typography>
@@ -54,11 +54,11 @@ class QuestionResults extends Component {
                 value={Math.round((question.optionTwo.votes.length / sumVotes()) * 100)}
                 color="secondary"
               />
-              <Typography variant="body2" color="primary">
+              <Typography variant="body2" color="secondary">
                 {`${Math.round((question.optionTwo.votes.length / sumVotes()) * 100)}%`}
               </Typography>
             </StyledBoxFlexCenter>
-            <Box textAlign="center">
+            <Box textAlign="center" fontStyle="italic">
               <Typography variant="caption" color="textSecondary">
                 {`${question.optionTwo.votes.length} out of ${sumVotes()} votes`}
               </Typography>

@@ -13,9 +13,9 @@ import {
   Divider,
 } from '@material-ui/core';
 import {
-  StyledBoxMenuLogin,
+  StyledBoxFlexCenter,
   StyledCardActions,
-  StyledMainCard,
+  StyledMainCardCenter,
   StyledUserSpan,
   StyledTitle,
 } from '../../styles/shared';
@@ -49,7 +49,7 @@ class LoginView extends Component {
 
     return (
       <Container maxWidth="sm">
-        <StyledMainCard>
+        <StyledMainCardCenter>
           <CardHeader
             title={<StyledTitle>Welcome to the WOULD YOU RATHER App!</StyledTitle>}
             subheader="Please sign in to continue."
@@ -70,10 +70,10 @@ class LoginView extends Component {
                 </MenuItem>
                 {users.map((user) => (
                   <MenuItem key={user.id} value={user.id}>
-                    <StyledBoxMenuLogin>
+                    <StyledBoxFlexCenter>
                       <Avatar src={user.avatarURL} alt={user.name}></Avatar>
                       <StyledUserSpan>{user.name}</StyledUserSpan>
-                    </StyledBoxMenuLogin>
+                    </StyledBoxFlexCenter>
                   </MenuItem>
                 ))}
               </Select>
@@ -90,7 +90,7 @@ class LoginView extends Component {
               Sign in
             </Button>
           </StyledCardActions>
-        </StyledMainCard>
+        </StyledMainCardCenter>
       </Container>
     );
   }
