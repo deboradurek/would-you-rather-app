@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { Button, Card, CardActions, CardContent, TextField, Typography } from '@material-ui/core';
 import { saveQuestion } from '../../actions/questions';
+import {
+  Box,
+  Button,
+  CardHeader,
+  Container,
+  Divider,
+  TextField,
+  Typography,
+} from '@material-ui/core';
+import {
+  StyledCardActions,
+  StyledCardContent,
+  StyledMainCard,
+  StyledTitle,
+} from '../../styles/shared';
 
 class AddView extends Component {
   state = {
@@ -43,58 +57,63 @@ class AddView extends Component {
     }
 
     return (
-      <Card variant="outlined" style={{ margin: 100 }}>
-        <CardContent>
-          <Typography variant="h5" component="h2">
-            Create New Question
-          </Typography>
+      <Container maxWidth="md">
+        <StyledMainCard>
+          <CardHeader title={<StyledTitle>Create New Question</StyledTitle>} />
 
-          <Typography color="textSecondary" gutterBottom>
-            Complete the question:
-          </Typography>
+          <Divider />
 
-          <Typography variant="h5" component="h2">
-            Would you rather...
-          </Typography>
-
-          <form onSubmit={this.handleSubmit}>
-            <TextField
-              style={{ margin: 8 }}
-              placeholder="  Enter Text For Option ONE here"
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              value={optionOneText}
-              onChange={this.handleChange('optionOneText')}
-            />
-
+          <StyledCardContent>
             <Typography color="textSecondary" gutterBottom>
-              OR
+              Complete the question:
             </Typography>
 
-            <TextField
-              style={{ margin: 8 }}
-              placeholder="  Enter Text For Option TWO here"
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              value={optionTwoText}
-              onChange={this.handleChange('optionTwoText')}
-            />
+            <Typography variant="h6" component="h2" color="primary">
+              <Box lineHeight={3}>Would you rather...</Box>
+            </Typography>
 
-            <CardActions>
-              <Button
-                size="small"
-                type="submit"
-                disabled={optionOneText === '' || optionTwoText === ''}
-              >
-                Add
-              </Button>
-            </CardActions>
-          </form>
-          <br />
-        </CardContent>
-      </Card>
+            <form onSubmit={this.handleSubmit}>
+              <TextField
+                placeholder="Enter Text For Option ONE here"
+                fullWidth
+                margin="normal"
+                color="primary"
+                variant="outlined"
+                value={optionOneText}
+                onChange={this.handleChange('optionOneText')}
+              />
+
+              <Typography color="textSecondary" gutterBottom>
+                <Box marginTop={2} textAlign="center">
+                  OR
+                </Box>
+              </Typography>
+
+              <TextField
+                placeholder="Enter Text For Option TWO here"
+                fullWidth
+                margin="normal"
+                color="primary"
+                variant="outlined"
+                value={optionTwoText}
+                onChange={this.handleChange('optionTwoText')}
+              />
+
+              <StyledCardActions>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  type="submit"
+                  disabled={optionOneText === '' || optionTwoText === ''}
+                >
+                  Add
+                </Button>
+              </StyledCardActions>
+            </form>
+          </StyledCardContent>
+        </StyledMainCard>
+      </Container>
     );
   }
 }

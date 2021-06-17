@@ -7,7 +7,7 @@ import {
   StyledBoxQuestion,
   StyledCard,
   StyledCardActions,
-  StyledCardContent,
+  StyledCardContentFlex,
 } from '../../../styles/shared';
 
 class QuestionCard extends Component {
@@ -33,7 +33,7 @@ class QuestionCard extends Component {
               />
               <Divider />
 
-              <StyledCardContent>
+              <StyledCardContentFlex>
                 <Box>
                   <img
                     src={users[question.author].avatarURL}
@@ -67,7 +67,7 @@ class QuestionCard extends Component {
                     </Link>
                   </StyledCardActions>
                 </StyledBoxQuestion>
-              </StyledCardContent>
+              </StyledCardContentFlex>
             </>
           ) : (
             <Skeleton animation="wave" variant="rect" height={280} />

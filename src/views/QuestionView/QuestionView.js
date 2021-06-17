@@ -17,7 +17,7 @@ import {
   StyledBoxFlexCenter,
   StyledBoxQuestion,
   StyledCardActions,
-  StyledCardContent,
+  StyledCardContentFlex,
   StyledMainCard,
   StyledRadioGroup,
 } from '../../styles/shared';
@@ -64,83 +64,81 @@ class QuestionView extends Component {
     }
 
     return (
-      <>
-        <Container maxWidth="sm">
-          <StyledMainCard>
-            {!isLoading ? (
-              <>
-                <CardHeader
-                  subheader={
-                    !voted ? (
-                      <Typography color="secondary">{selectedUser.name} asks:</Typography>
-                    ) : (
-                      <Typography color="secondary">Asked by {selectedUser.name}</Typography>
-                    )
-                  }
-                />
-                <Divider />
-
-                <StyledCardContent>
-                  <StyledBoxFlexCenter>
-                    <img
-                      src={selectedUser.avatarURL}
-                      alt={selectedUser.name}
-                      className="avatar-question"
-                    ></img>
-                  </StyledBoxFlexCenter>
-
-                  <Divider orientation="vertical" flexItem />
-
-                  {!voted ? (
-                    // Question
-                    <StyledBoxQuestion>
-                      <Typography variant="h5" component="h2" color="primary" gutterBottom>
-                        Would you rather
-                      </Typography>
-
-                      <form onSubmit={(e) => this.handleSubmit(e)}>
-                        <StyledRadioGroup
-                          name="quiz"
-                          value={choiceValue}
-                          onChange={(e) => this.handleRadioChange(e)}
-                        >
-                          <FormControlLabel
-                            value={'optionOne'}
-                            control={<Radio />}
-                            label={question.optionOne.text}
-                          />
-                          <FormControlLabel
-                            value={'optionTwo'}
-                            control={<Radio />}
-                            label={question.optionTwo.text}
-                          />
-                        </StyledRadioGroup>
-
-                        <StyledCardActions>
-                          <Button
-                            type="submit"
-                            variant="contained"
-                            size="large"
-                            color="primary"
-                            fullWidth
-                          >
-                            Vote
-                          </Button>
-                        </StyledCardActions>
-                      </form>
-                    </StyledBoxQuestion>
+      <Container maxWidth="sm">
+        <StyledMainCard>
+          {!isLoading ? (
+            <>
+              <CardHeader
+                subheader={
+                  !voted ? (
+                    <Typography color="secondary">{selectedUser.name} asks:</Typography>
                   ) : (
-                    // Results
-                    <QuestionResults question={question} />
-                  )}
-                </StyledCardContent>
-              </>
-            ) : (
-              <Skeleton animation="wave" variant="rect" height={340} />
-            )}
-          </StyledMainCard>
-        </Container>
-      </>
+                    <Typography color="secondary">Asked by {selectedUser.name}</Typography>
+                  )
+                }
+              />
+              <Divider />
+
+              <StyledCardContentFlex>
+                <StyledBoxFlexCenter>
+                  <img
+                    src={selectedUser.avatarURL}
+                    alt={selectedUser.name}
+                    className="avatar-question"
+                  ></img>
+                </StyledBoxFlexCenter>
+
+                <Divider orientation="vertical" flexItem />
+
+                {!voted ? (
+                  // Question
+                  <StyledBoxQuestion>
+                    <Typography variant="h5" component="h2" color="primary" gutterBottom>
+                      Would you rather
+                    </Typography>
+
+                    <form onSubmit={(e) => this.handleSubmit(e)}>
+                      <StyledRadioGroup
+                        name="quiz"
+                        value={choiceValue}
+                        onChange={(e) => this.handleRadioChange(e)}
+                      >
+                        <FormControlLabel
+                          value={'optionOne'}
+                          control={<Radio />}
+                          label={question.optionOne.text}
+                        />
+                        <FormControlLabel
+                          value={'optionTwo'}
+                          control={<Radio />}
+                          label={question.optionTwo.text}
+                        />
+                      </StyledRadioGroup>
+
+                      <StyledCardActions>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          size="large"
+                          color="primary"
+                          fullWidth
+                        >
+                          Vote
+                        </Button>
+                      </StyledCardActions>
+                    </form>
+                  </StyledBoxQuestion>
+                ) : (
+                  // Results
+                  <QuestionResults question={question} />
+                )}
+              </StyledCardContentFlex>
+            </>
+          ) : (
+            <Skeleton animation="wave" variant="rect" height={340} />
+          )}
+        </StyledMainCard>
+      </Container>
     );
   }
 }

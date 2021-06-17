@@ -16,6 +16,10 @@ export const StyledCard = styled(Card)`
 `;
 
 export const StyledCardContent = styled(CardContent)`
+  padding: 36px 32px;
+`;
+
+export const StyledCardContentFlex = styled(CardContent)`
   display: flex;
   && {
     padding: 36px 32px;
@@ -25,6 +29,7 @@ export const StyledCardContent = styled(CardContent)`
 export const StyledTitle = styled.h4`
   color: ${(props) => props.theme.secondary};
   margin: 10px;
+  text-align: center;
 `;
 
 export const StyledUserSpan = styled.span`
