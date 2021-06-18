@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import NavBar from './NavBar';
+import NavBar from './NavBar/NavBar';
 import getUsers from '../actions/users';
 import HomeView from '../views/HomeView/HomeView';
 import QuestionView from '../views/QuestionView/QuestionView';

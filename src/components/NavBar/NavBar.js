@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAuthedUser } from '../../actions/authedUser';
 import { AppBar, Avatar, Button, Typography } from '@material-ui/core';
@@ -17,6 +17,7 @@ class NavBar extends Component {
 
   render() {
     const { authedUser, isAuthenticated } = this.props;
+    const { pathname } = this.props.location;
 
     return (
       <AppBar position="sticky">
@@ -49,4 +50,4 @@ function mapStateToProps({ authedUser }) {
   };
 }
 
-export default connect(mapStateToProps)(NavBar);
+export default withRouter(connect(mapStateToProps)(NavBar));
