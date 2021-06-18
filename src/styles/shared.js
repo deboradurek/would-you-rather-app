@@ -66,6 +66,10 @@ export const StyledBoxQuestion = styled(Box)`
 
 export const StyledBoxResults = styled.div`
   margin: 24px 0;
+  padding: 14px;
+  background-color: ${(props) => (props.isOptionOneSelected ? '#f5fafc' : '')};
+  border: ${(props) => (props.isOptionOneSelected ? '1px solid #8FD6E1' : 'none')};
+  border-radius: ${(props) => (props.isOptionOneSelected ? '10px' : '0')};
 `;
 
 export const StyledCaptionVotes = styled.span`
