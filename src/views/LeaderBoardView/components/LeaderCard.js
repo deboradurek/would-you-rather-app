@@ -1,9 +1,17 @@
-import { Box, Card, CardContent, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import getQuestions from '../../../actions/questions';
+import Score from '../../../images/score.png';
+import { Box, Container, Divider, Typography } from '@material-ui/core';
+import {
+  StyledBoxQuestion,
+  StyledCard,
+  StyledCardContentFlex,
+  StyledTypography,
+} from '../../../styles/shared';
 
 class LeaderCard extends Component {
+  // Get Questions
   componentDidMount() {
     this.props.dispatch(getQuestions());
   }
@@ -12,37 +20,42 @@ class LeaderCard extends Component {
     const { users } = this.props;
 
     return (
-      <>
+      <Container maxWidth="md">
         {users.map((user) => (
-          <Card key={user.id} variant="outlined">
-            <CardContent>
-              <div>
-                <img
-                  src={user.avatarURL}
-                  alt={user.name}
-                  style={{ height: 100, width: 100, marginRight: 12 }}
-                ></img>
-              </div>
-              <Typography variant="h5" component="h2">
-                {user.name}
-              </Typography>
+          <StyledCard key={user.id}>
+            <StyledCardContentFlex>
               <Box>
-                <Typography color="textSecondary" variant="body2" component="p">
-                  Created questions: {user.questions.length}
+                <img src={user.avatarURL} alt={user.name} className="avatar-question"></img>
+              </Box>
+
+              <Divider orientation="vertical" flexItem />
+
+              <StyledBoxQuestion>
+                <Typography variant="h5" component="h2" color="primary">
+                  {user.name}
                 </Typography>
-                <Typography color="textSecondary" variant="body2" component="p">
-                  Answered questions: {user.answers.length}
+                <Box marginTop={4}>
+                  <StyledTypography color="textSecondary" variant="body1" component="p">
+                    Created questions: {user.questions.length}
+                  </StyledTypography>
+                  <StyledTypography color="textSecondary" variant="body1" component="p">
+                    Answered questions: {user.answers.length}
+                  </StyledTypography>
+                </Box>
+              </StyledBoxQuestion>
+
+              <Divider orientation="vertical" flexItem />
+
+              <Box marginLeft={3} textAlign="center">
+                <img alt="" src={Score} className="score-img"></img>
+                <Typography variant="h3" component="p" color="secondary">
+                  {user.score}
                 </Typography>
               </Box>
-              <Box>
-                <Typography variant="h5" component="h2">
-                  Score {user.score}
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
+            </StyledCardContentFlex>
+          </StyledCard>
         ))}
-      </>
+      </Container>
     );
   }
 }
