@@ -2,20 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { saveQuestion } from '../../actions/questions';
-import {
-  Box,
-  Button,
-  CardHeader,
-  Container,
-  Divider,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Button, CardHeader, Container, Divider, TextField, Typography } from '@material-ui/core';
 import {
   StyledCardActions,
   StyledCardContent,
   StyledMainCard,
   StyledTitle,
+  StyledTypography,
+  StyledTypographyCenter,
 } from '../../styles/shared';
 
 class AddView extends Component {
@@ -68,9 +62,9 @@ class AddView extends Component {
               Complete the question:
             </Typography>
 
-            <Typography variant="h6" component="h2" color="primary">
-              <Box lineHeight={3}>Would you rather...</Box>
-            </Typography>
+            <StyledTypography variant="h6" component="h2" color="primary">
+              Would you rather...
+            </StyledTypography>
 
             <form onSubmit={this.handleSubmit}>
               <TextField
@@ -83,11 +77,9 @@ class AddView extends Component {
                 onChange={this.handleChange('optionOneText')}
               />
 
-              <Typography color="textSecondary" gutterBottom>
-                <Box marginTop={2} textAlign="center">
-                  OR
-                </Box>
-              </Typography>
+              <StyledTypographyCenter color="textSecondary" gutterBottom>
+                OR
+              </StyledTypographyCenter>
 
               <TextField
                 placeholder="Enter Text For Option TWO here"

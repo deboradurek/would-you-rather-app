@@ -1,5 +1,13 @@
 import styled from 'styled-components';
-import { Card, Box, CardActions, CardContent, RadioGroup, LinearProgress } from '@material-ui/core';
+import {
+  Card,
+  Box,
+  CardActions,
+  CardContent,
+  RadioGroup,
+  LinearProgress,
+  Typography,
+} from '@material-ui/core';
 
 export const StyledMainCardCenter = styled(Card)`
   margin: 80px 0;
@@ -81,4 +89,13 @@ export const StyledLinearProgress = styled(LinearProgress)`
   height: 28px;
   border-radius: 5px;
   margin-right: 8px;
+`;
+
+export const StyledTypography = styled(Typography)`
+  margin-top: 16px;
+`;
+
+export const StyledTypographyCenter = styled(Typography)`
+  margin-top: 16px;
+  text-align: center;
 `;
