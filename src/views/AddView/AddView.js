@@ -5,12 +5,11 @@ import { saveQuestion } from '../../actions/questions';
 import { Button, CardHeader, Container, Divider, TextField, Typography } from '@material-ui/core';
 import {
   StyledCardActions,
-  StyledCardContent,
   StyledMainCard,
   StyledTitle,
   StyledTypography,
-  StyledTypographyCenter,
 } from '../../styles/shared';
+import { StyledCardContent, StyledTypographyCenter } from './styles';
 
 class AddView extends Component {
   state = {

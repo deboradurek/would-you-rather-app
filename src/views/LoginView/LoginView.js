@@ -12,13 +12,8 @@ import {
   CardHeader,
   Divider,
 } from '@material-ui/core';
-import {
-  StyledBoxFlexCenter,
-  StyledCardActions,
-  StyledMainCardCenter,
-  StyledUserSpan,
-  StyledTitle,
-} from '../../styles/shared';
+import { StyledBoxFlexCenter, StyledCardActions, StyledTitle } from '../../styles/shared';
+import { StyledMainCardCenter, StyledUserSpan } from './styles';
 
 class LoginView extends Component {
   state = {

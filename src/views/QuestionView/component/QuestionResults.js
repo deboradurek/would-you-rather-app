@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { Box, Typography } from '@material-ui/core';
-import {
-  StyledBoxFlexCenter,
-  StyledBoxQuestion,
-  StyledBoxResults,
-  StyledLinearProgress,
-} from '../../../styles/shared';
+import { StyledBoxFlexCenter, StyledBoxQuestion } from '../../../styles/shared';
+import { StyledBoxResults, StyledLinearProgress } from '../styles';
 
 class QuestionResults extends Component {
   render() {
@@ -22,7 +18,7 @@ class QuestionResults extends Component {
         </Typography>
 
         <Box>
-          <StyledBoxResults isOptionOneSelected={isOptionOneSelected}>
+          <StyledBoxResults highlight={isOptionOneSelected}>
             <Typography color="primary" variant="body2" component="p" gutterBottom>
               Would you rather {question.optionOne.text}?
             </Typography>
@@ -44,7 +40,7 @@ class QuestionResults extends Component {
             </Box>
           </StyledBoxResults>
 
-          <StyledBoxResults isOptionOneSelected={!isOptionOneSelected}>
+          <StyledBoxResults highlight={!isOptionOneSelected}>
             <Typography color="primary" variant="body2" component="p" gutterBottom>
               Would you rather {question.optionTwo.text}?
             </Typography>

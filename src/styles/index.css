@@ -9,22 +9,15 @@ body {
   height: 70px;
   margin-top: 30px;
 }
+
 .select-box > div[role='button'] {
   padding: 10px 20px;
-}
-
-.login-avatar {
-  margin-right: 12px;
 }
 
 .avatar-question {
   height: 150px;
   width: 150px;
   margin-right: 40px;
-}
-
-.full-width {
-  width: 100%;
 }
 
 .score-img {

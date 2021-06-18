@@ -19,8 +19,8 @@ import {
   StyledCardActions,
   StyledCardContentFlex,
   StyledMainCard,
-  StyledRadioGroup,
 } from '../../styles/shared';
+import { StyledRadioGroup } from './styles';
 
 class QuestionView extends Component {
   state = {
