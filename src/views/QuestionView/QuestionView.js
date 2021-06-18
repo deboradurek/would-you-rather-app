@@ -56,7 +56,7 @@ class QuestionView extends Component {
   };
 
   render() {
-    const { selectedUser, isLoading, question, voted } = this.props;
+    const { selectedUser, isLoading, question, voted, isOptionOneSelected } = this.props;
     const { choiceValue } = this.state;
 
     if (!question && !isLoading) {
@@ -131,7 +131,7 @@ class QuestionView extends Component {
                   </StyledBoxQuestion>
                 ) : (
                   // Results
-                  <QuestionResults question={question} />
+                  <QuestionResults question={question} isOptionOneSelected={isOptionOneSelected} />
                 )}
               </StyledCardContentFlex>
             </>
@@ -156,6 +156,7 @@ function mapStateToProps({ authedUser, users, questions: { isLoading, questions 
     isLoading,
     question,
     selectedUser: users[question?.author],
+    isOptionOneSelected: question?.optionOne.votes.includes(authedUser.id),
   };
 }
 

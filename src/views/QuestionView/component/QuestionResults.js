@@ -9,7 +9,7 @@ import {
 
 class QuestionResults extends Component {
   render() {
-    const { question } = this.props;
+    const { question, isOptionOneSelected } = this.props;
 
     const sumVotes = () => {
       return question.optionOne.votes.length + question.optionTwo.votes.length;
@@ -22,7 +22,7 @@ class QuestionResults extends Component {
         </Typography>
 
         <Box>
-          <StyledBoxResults>
+          <StyledBoxResults isOptionOneSelected={isOptionOneSelected}>
             <Typography color="primary" variant="body2" component="p" gutterBottom>
               Would you rather {question.optionOne.text}?
             </Typography>
@@ -44,7 +44,7 @@ class QuestionResults extends Component {
             </Box>
           </StyledBoxResults>
 
-          <StyledBoxResults>
+          <StyledBoxResults isOptionOneSelected={!isOptionOneSelected}>
             <Typography color="primary" variant="body2" component="p" gutterBottom>
               Would you rather {question.optionTwo.text}?
             </Typography>
