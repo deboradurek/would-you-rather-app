@@ -24,3 +24,7 @@ body {
   width: 40%;
   margin-bottom: 20px;
 }
+
+.active {
+  color: #8fd6e1 !important;
+}

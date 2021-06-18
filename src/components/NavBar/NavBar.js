@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAuthedUser } from '../../actions/authedUser';
 import { AppBar, Avatar, Button, Typography } from '@material-ui/core';
@@ -17,7 +17,6 @@ class NavBar extends Component {
 
   render() {
     const { authedUser, isAuthenticated } = this.props;
-    const { pathname } = this.props.location;
 
     return (
       <AppBar position="sticky">
@@ -26,9 +25,15 @@ class NavBar extends Component {
           {isAuthenticated && (
             <>
               <GroupedLinks>
-                <Link to={'/'}>Home</Link>
-                <Link to={'/add'}>Add Question</Link>
-                <Link to={'/leaderboard'}>LeaderBoard</Link>
+                <NavLink exact to="/" activeClassName="active">
+                  Home
+                </NavLink>
+                <NavLink to="/add" activeClassName="active">
+                  Add Question
+                </NavLink>
+                <NavLink to="/leaderboard" activeClassName="active">
+                  LeaderBoard
+                </NavLink>
               </GroupedLinks>
               <NavAuthedUser>
                 <Typography>Hello, {authedUser.name}</Typography>
