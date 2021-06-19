@@ -6,14 +6,13 @@ import {
   Container,
   FormControl,
   MenuItem,
-  Select,
   Button,
   Avatar,
   CardHeader,
   Divider,
 } from '@material-ui/core';
 import { StyledBoxFlexCenter, StyledCardActions, StyledTitle } from '../../styles/shared';
-import { StyledMainCardCenter, StyledUserSpan } from './styles';
+import { StyledMainCardCenter, StyledSelect, StyledUserSpan } from './styles';
 
 class LoginView extends Component {
   state = {
@@ -54,7 +53,7 @@ class LoginView extends Component {
 
           <CardContent>
             <FormControl variant="filled">
-              <Select
+              <StyledSelect
                 value={selectedUser}
                 onChange={this.handleChange}
                 displayEmpty
@@ -71,7 +70,7 @@ class LoginView extends Component {
                     </StyledBoxFlexCenter>
                   </MenuItem>
                 ))}
-              </Select>
+              </StyledSelect>
             </FormControl>
           </CardContent>
           <StyledCardActions>
