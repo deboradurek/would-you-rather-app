@@ -17,7 +17,7 @@ export const StyledRadioGroup = styled(RadioGroup)`
 export const StyledBoxResults = styled.div`
   margin: 24px 0;
   padding: 14px;
-  background-color: ${(props) => (props.highlight ? '#f5fafc' : '')};
+  background-color: ${(props) => (props.highlight ? '#f5fafc' : 'none')};
   border: ${(props) => (props.highlight ? '1px solid #8FD6E1' : 'none')};
   border-radius: ${(props) => (props.highlight ? '10px' : '0')};
 `;

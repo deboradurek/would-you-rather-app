@@ -44,3 +44,8 @@ export const StyledBoxQuestion = styled(Box)`
 export const StyledTypography = styled(Typography)`
   margin-top: 16px;
 `;
+
+export const StyledTypographyCenter = styled(Typography)`
+  margin-top: 16px;
+  text-align: center;
+`;

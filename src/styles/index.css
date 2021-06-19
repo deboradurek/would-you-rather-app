@@ -4,16 +4,6 @@ body {
   background-color: #ececec;
 }
 
-.select-box {
-  min-width: 270px;
-  height: 70px;
-  margin-top: 30px;
-}
-
-.select-box > div[role='button'] {
-  padding: 10px 20px;
-}
-
 .avatar-question {
   height: 150px;
   width: 150px;
@@ -25,6 +15,11 @@ body {
   margin-bottom: 20px;
 }
 
-.active {
-  color: #8fd6e1 !important;
+.button-progress {
+  color: green;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -12;
+  margin-left: -12;
 }

@@ -24,6 +24,8 @@ export const GroupedLinks = styled.div`
     margin: 0 1rem;
     text-decoration: none;
   }
+
+  a.active,
   a:hover {
     color: ${(props) => props.theme.blueLight};
   }
