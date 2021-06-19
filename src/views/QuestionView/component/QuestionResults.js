@@ -4,12 +4,16 @@ import { StyledBoxFlexCenter, StyledBoxQuestion } from '../../../styles/shared';
 import { StyledBoxResults, StyledLinearProgress } from '../styles';
 
 class QuestionResults extends Component {
+  sumVotes = () => {
+    const { question } = this.props;
+    return question.optionOne.votes.length + question.optionTwo.votes.length;
+  };
+
   render() {
     const { question, isOptionOneSelected } = this.props;
-
-    const sumVotes = () => {
-      return question.optionOne.votes.length + question.optionTwo.votes.length;
-    };
+    const sumVotes = this.sumVotes();
+    const optionOneLen = question.optionOne.votes.length;
+    const optionTwoLen = question.optionTwo.votes.length;
 
     return (
       <StyledBoxQuestion>
@@ -26,16 +30,16 @@ class QuestionResults extends Component {
             <StyledBoxFlexCenter>
               <StyledLinearProgress
                 variant="determinate"
-                value={Math.round((question.optionOne.votes.length / sumVotes()) * 100)}
+                value={Math.round((optionOneLen / sumVotes) * 100)}
                 color="secondary"
               />
               <Typography variant="body2" color="secondary">
-                {`${Math.round((question.optionOne.votes.length / sumVotes()) * 100)}%`}
+                {`${Math.round((optionOneLen / sumVotes) * 100)}%`}
               </Typography>
             </StyledBoxFlexCenter>
             <Box textAlign="center" fontStyle="italic">
               <Typography variant="caption" color="textSecondary">
-                {`${question.optionOne.votes.length} out of ${sumVotes()} votes`}
+                {`${optionOneLen} out of ${sumVotes} votes`}
               </Typography>
             </Box>
           </StyledBoxResults>
@@ -47,16 +51,16 @@ class QuestionResults extends Component {
             <StyledBoxFlexCenter>
               <StyledLinearProgress
                 variant="determinate"
-                value={Math.round((question.optionTwo.votes.length / sumVotes()) * 100)}
+                value={Math.round((optionTwoLen / sumVotes) * 100)}
                 color="secondary"
               />
               <Typography variant="body2" color="secondary">
-                {`${Math.round((question.optionTwo.votes.length / sumVotes()) * 100)}%`}
+                {`${Math.round((optionTwoLen / sumVotes) * 100)}%`}
               </Typography>
             </StyledBoxFlexCenter>
             <Box textAlign="center" fontStyle="italic">
               <Typography variant="caption" color="textSecondary">
-                {`${question.optionTwo.votes.length} out of ${sumVotes()} votes`}
+                {`${optionTwoLen} out of ${sumVotes} votes`}
               </Typography>
             </Box>
           </StyledBoxResults>
