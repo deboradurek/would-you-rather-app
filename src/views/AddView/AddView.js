@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import { saveQuestion } from '../../actions/questions';
-import { Button, CardHeader, Container, Divider, TextField, Typography } from '@material-ui/core';
+import LoadingButton from '../../components/LoadingButton/LoadingButton';
+import { CardHeader, Container, Divider, TextField, Typography } from '@material-ui/core';
 import {
   StyledCardActions,
   StyledMainCard,
   StyledTitle,
   StyledTypography,
+  StyledTypographyCenter,
 } from '../../styles/shared';
-import { StyledCardContent, StyledTypographyCenter } from './styles';
+import { StyledCardContent } from './styles';
 
 class AddView extends Component {
   state = {
     optionOneText: '',
     optionTwoText: '',
-    toHome: false,
+    isSaving: false,
   };
 
   handleChange = (field) => (e) => {
@@ -28,26 +29,22 @@ class AddView extends Component {
 
   // Save New Question to DataBase
   handleSubmit = (e) => {
+    const { optionOneText, optionTwoText } = this.state;
+    const { dispatch, authedUserId, history } = this.props;
+
     e.preventDefault();
 
-    const { optionOneText, optionTwoText } = this.state;
-    const { dispatch, authedUser } = this.props;
-
-    dispatch(saveQuestion(optionOneText, optionTwoText, authedUser));
-
     this.setState({
-      optionOneText: '',
-      optionTwoText: '',
-      toHome: true,
+      isSaving: true,
+    });
+
+    dispatch(saveQuestion(optionOneText, optionTwoText, authedUserId)).then(() => {
+      history.push('/');
     });
   };
 
   render() {
-    const { optionOneText, optionTwoText, toHome } = this.state;
-
-    if (toHome) {
-      return <Redirect to="/" />;
-    }
+    const { optionOneText, optionTwoText, isSaving } = this.state;
 
     return (
       <Container maxWidth="md">
@@ -91,15 +88,16 @@ class AddView extends Component {
               />
 
               <StyledCardActions>
-                <Button
+                <LoadingButton
                   variant="contained"
                   size="large"
                   color="primary"
                   type="submit"
                   disabled={optionOneText === '' || optionTwoText === ''}
+                  loading={isSaving}
                 >
                   Add
-                </Button>
+                </LoadingButton>
               </StyledCardActions>
             </form>
           </StyledCardContent>
@@ -111,7 +109,7 @@ class AddView extends Component {
 
 function mapStateToProps({ authedUser }) {
   return {
-    authedUser: authedUser.id,
+    authedUserId: authedUser.id,
   };
 }
 
